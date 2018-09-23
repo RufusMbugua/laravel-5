@@ -25,23 +25,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"  \
 	&& 	php -r "unlink('composer-setup.php');" \
 	&& 	mv /bin/composer.phar /usr/local/bin/composer
 
-# Install Composer Packages
-RUN composer self-update	\
-	&& cd /var/www/html		\
-	&& composer update		\
-		--no-ansi			\
-		--no-dev			\
-		--no-interaction	\
-		--no-progress		\
-		--prefer-dist
-
-RUN  chmod -R 777 storage
-RUN cp .env.example .env	\
-	&&	php artisan key:generate
-
-RUN chmod +x ./docker/install.sh
-RUN ./docker/install.sh
-
 
 VOLUME /var/www/html
 
